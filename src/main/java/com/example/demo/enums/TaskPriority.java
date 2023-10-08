@@ -1,4 +1,4 @@
-package com.example.demo.task;
+package com.example.demo.enums;
 
 public enum TaskPriority {
     LOW,
