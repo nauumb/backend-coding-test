@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public String createTask(TaskDTO taskDTO) {
+    public String createTask(TaskDTO taskDTO) throws CreateTaskException {
 
         boolean taskWithId = !Objects.isNull(taskDTO.getId());
         if (taskWithId) {
@@ -67,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
         return "Task created.";
     }
 
-    public String updateTask(TaskDTO taskDTO) {
+    public String updateTask(TaskDTO taskDTO) throws UpdateTaskException {
 
         if (Objects.isNull(taskDTO.getId())) {
             throw new UpdateTaskException("Task identifier wasn't specified.");
@@ -78,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public String deteleTask(Long id) {
+    public String deteleTask(Long id) throws TaskNotFoundException {
         taskRepository.delete(taskRepository.findById(id).orElseThrow(() -> {
             throw new TaskNotFoundException(format("Task not found with id [{0}].", id));
         }));
