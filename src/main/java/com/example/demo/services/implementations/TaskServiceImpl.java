@@ -72,8 +72,10 @@ public class TaskServiceImpl implements TaskService {
         if (Objects.isNull(taskDTO.getId())) {
             throw new UpdateTaskException("Task identifier wasn't specified.");
         }
+        //Fix task doesn't exist behaviour. Should be a better solution.
+        getTaskById(taskDTO.getId());
 
-        taskRepository.save(taskMapper.map(taskDTO, TaskEntity.class));
+        TaskEntity task = taskRepository.save(taskMapper.map(taskDTO, TaskEntity.class));
         return format("Task with id [{0}] was updated.", taskDTO.getId());
     }
 
