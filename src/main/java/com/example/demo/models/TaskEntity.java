@@ -28,12 +28,12 @@ public class TaskEntity {
     @Enumerated(EnumType.ORDINAL)
     private TaskPriority priority;
 
+    @CreationTimestamp()
     @Column(name = "creationdate", updatable=false)
-    @CreationTimestamp
     private Timestamp creationDate;
 
-    @Column(name = "updateddate")
     @UpdateTimestamp
+    @Column(name = "updateddate")
     private Timestamp updatedDate;
 
     @OneToMany(
