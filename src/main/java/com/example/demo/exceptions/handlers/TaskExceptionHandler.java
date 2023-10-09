@@ -16,6 +16,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.NoSuchElementException;
 
+import static java.text.MessageFormat.format;
+
+
 @ControllerAdvice
 public class TaskExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = { TaskNotFoundException.class, TaskNotFoundException.class })
@@ -46,7 +49,7 @@ public class TaskExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = { Exception.class })
-    protected ResponseEntity<Object> handleGenerealException(Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    protected ResponseEntity<Object> handleGeneralException(Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, format("Unexpected error. Reason: [{0}]", ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
