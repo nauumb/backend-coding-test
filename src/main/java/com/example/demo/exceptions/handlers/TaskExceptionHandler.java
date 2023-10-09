@@ -33,6 +33,7 @@ public class TaskExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    //Move to a generic handler with other generic exceptions.
     @ExceptionHandler(value = { ConversionFailedException.class, ConversionFailedException.class })
     public ResponseEntity<Object> handleConflict(ConversionException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -41,6 +42,11 @@ public class TaskExceptionHandler extends ResponseEntityExceptionHandler {
     //Move to a generic handler with other generic exceptions.
     @ExceptionHandler(value = { PropertyReferenceException.class })
     protected ResponseEntity<Object> handleInvalidParam(RuntimeException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = { Exception.class })
+    protected ResponseEntity<Object> handleGenerealException(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
