@@ -69,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
     }
 
-    public String updateTask(TaskDTO taskDTO) throws UpdateTaskException {
+    public TaskDTO updateTask(TaskDTO taskDTO) throws UpdateTaskException {
 
         Long id = taskDTO.getId();
         if (Objects.isNull(id)) {
@@ -81,8 +81,10 @@ public class TaskServiceImpl implements TaskService {
             throw new TaskNotFoundException(format("Task not found with id [{0}].", id));
         }
 
-        TaskEntity task = taskRepository.save(taskMapper.map(taskDTO, TaskEntity.class));
-        return format("Task with id [{0}] was updated.", id);
+        TaskEntity taskEntity = taskMapper.map(taskDTO, TaskEntity.class);
+        taskEntity.getSubtasks().forEach(subtaskEntity -> subtaskEntity.setTask(taskEntity));
+
+        return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
     }
 
     @Override
