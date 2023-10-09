@@ -15,7 +15,7 @@ public interface TaskService {
 
     TaskDTO getTaskById(Long id) throws TaskNotFoundException;
 
-    String createTask(TaskDTO taskDTO) throws CreateTaskException;
+    TaskDTO createTask(TaskDTO taskDTO) throws CreateTaskException;
 
     String updateTask(TaskDTO taskDTO) throws UpdateTaskException;
 

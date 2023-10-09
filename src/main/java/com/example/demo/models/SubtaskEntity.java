@@ -7,24 +7,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "task")
-public class TaskEntity {
+@Table(name = "subtask")
+public class SubtaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
+    @Column
     private String description;
 
-    @Column(name = "completed")
+    @Column
     private boolean completed;
 
-    @Column(name = "priority")
     @Enumerated(EnumType.ORDINAL)
     private TaskPriority priority;
 
@@ -35,11 +32,7 @@ public class TaskEntity {
     @Column(name = "updateddate")
     @UpdateTimestamp
     private Timestamp updatedDate;
-
-    @OneToMany(
-            mappedBy = "task",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<SubtaskEntity> subtasks = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id", nullable = false)
+    private TaskEntity task;
 }

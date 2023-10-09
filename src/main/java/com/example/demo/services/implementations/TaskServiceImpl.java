@@ -56,15 +56,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public String createTask(TaskDTO taskDTO) throws CreateTaskException {
+    public TaskDTO createTask(TaskDTO taskDTO) throws CreateTaskException {
 
         boolean taskWithId = !Objects.isNull(taskDTO.getId());
         if (taskWithId) {
             throw new CreateTaskException("Identifiers must not be specified in the creation process.");
         }
 
-        taskRepository.save(taskMapper.map(taskDTO, TaskEntity.class));
-        return "Task created.";
+        TaskEntity taskEntity = taskMapper.map(taskDTO, TaskEntity.class);
+        taskEntity.getSubtasks().forEach(subtaskEntity -> subtaskEntity.setTask(taskEntity));
+
+        return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
     }
 
     public String updateTask(TaskDTO taskDTO) throws UpdateTaskException {

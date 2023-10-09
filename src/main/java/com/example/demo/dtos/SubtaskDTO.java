@@ -5,12 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
-public class TaskDTO {
+public class SubtaskDTO {
     private Long id;
 
     private String description;
@@ -22,6 +20,4 @@ public class TaskDTO {
     private Timestamp creationDate;
 
     private Timestamp updatedDate;
-
-    List<SubtaskDTO> subtasks = new ArrayList<>();
 }
