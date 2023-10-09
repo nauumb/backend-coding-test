@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
             throw new UpdateTaskException("Task identifier wasn't specified.");
         }
 
-        Boolean taskNotExist = !taskRepository.existsById(id);
+        boolean taskNotExist = !taskRepository.existsById(id);
         if (taskNotExist) {
             throw new TaskNotFoundException(format("Task not found with id [{0}].", id));
         }
