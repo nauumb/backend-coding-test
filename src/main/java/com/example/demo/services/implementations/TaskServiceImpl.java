@@ -33,6 +33,14 @@ public class TaskServiceImpl implements TaskService {
         this.taskMapper = taskMapper;
     }
 
+    /**
+     * Get all tasks from the database. Can be filtered by priority and/or completation. Also ordered by any attribute of a task.
+     * @param priority Priority level of a task. Accepted values defined by TaskPriority enum.
+     * @param completed Completion status of a task.
+     * @param sortField Defines the field to be ordered by. Can be ordered by any attribute of a task.
+     * @param sortDirection Defines de sort direction. Can be ascendant or descendant.
+     * @return A list of task dto that meet the search criteria.
+     */
     @Override
     public List<TaskDTO> getAllTasks(TaskPriority priority, Boolean completed, String sortField, Direction sortDirection) {
 
@@ -48,6 +56,12 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Search a task by the specified id.
+     * @param id Identifier of the task to be searched.
+     * @return a task dto of the specified id.
+     * @throws TaskNotFoundException throw if the specified id does not match with any task stored in the database.
+     */
     @Override
     public TaskDTO getTaskById(Long id) throws TaskNotFoundException {
         return taskMapper.map(taskRepository.findById(id).orElseThrow(() -> {
@@ -55,6 +69,12 @@ public class TaskServiceImpl implements TaskService {
         }), TaskDTO.class);
     }
 
+    /**
+     * Create a new task with the specified data.
+     * @param taskDTO the task to be persisted.
+     * @return the task persisted.
+     * @throws CreateTaskException throw if specifies an identifier for the task to be created.
+     */
     @Override
     public TaskDTO createTask(TaskDTO taskDTO) throws CreateTaskException {
 
@@ -69,6 +89,12 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
     }
 
+    /**
+     * Update a task with the specified data.
+     * @param taskDTO the task to be updated.
+     * @return the task updated.
+     * @throws UpdateTaskException throw if the identifier is not specified.
+     */
     public TaskDTO updateTask(TaskDTO taskDTO) throws UpdateTaskException {
 
         Long id = taskDTO.getId();
@@ -87,6 +113,12 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
     }
 
+    /**
+     * Delete a task by identifier.
+     * @param id identifier of the task to be deleted.
+     * @return a confirmation message.
+     * @throws TaskNotFoundException throw if the specified identifier does not exist.
+     */
     @Override
     public String deteleTask(Long id) throws TaskNotFoundException {
         taskRepository.delete(taskRepository.findById(id).orElseThrow(() -> {
