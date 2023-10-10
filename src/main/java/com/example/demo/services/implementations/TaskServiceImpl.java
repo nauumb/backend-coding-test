@@ -84,6 +84,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         TaskEntity taskEntity = taskMapper.map(taskDTO, TaskEntity.class);
+        //assing parent task to all subtasks.
         taskEntity.getSubtasks().forEach(subtaskEntity -> subtaskEntity.setTask(taskEntity));
 
         return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
@@ -108,6 +109,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         TaskEntity taskEntity = taskMapper.map(taskDTO, TaskEntity.class);
+        //assing parent task to all subtasks.
         taskEntity.getSubtasks().forEach(subtaskEntity -> subtaskEntity.setTask(taskEntity));
 
         return taskMapper.map(taskRepository.save(taskEntity), TaskDTO.class);
