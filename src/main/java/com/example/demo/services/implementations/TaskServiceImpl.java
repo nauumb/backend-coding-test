@@ -96,6 +96,7 @@ public class TaskServiceImpl implements TaskService {
      * @return the task updated.
      * @throws UpdateTaskException throw if the identifier is not specified.
      */
+    @Override
     public TaskDTO updateTask(TaskDTO taskDTO) throws UpdateTaskException {
 
         Long id = taskDTO.getId();
